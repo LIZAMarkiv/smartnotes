@@ -1,5 +1,7 @@
 from PyQt6.QtWidgets import*
+from file_meneger import*
 
+notes = read_from_file()
 app = QApplication([])
 window = QWidget()
 notes_text = QTextEdit()
@@ -34,10 +36,10 @@ app.setStyleSheet("""
         }
     """)
 
-
 notes_list_lbl = QLabel("список заміток")
 notes_list = QListWidget()
 notes_list2 = QListWidget()
+notes_list.addItems(notes)
 knopka1 = QPushButton("Створити замітку")
 knopka2 = QPushButton("Видалити замітку")
 knopka3 = QPushButton("Зберегти замітку")
@@ -75,6 +77,14 @@ v1.addWidget(knopka6)
 
 main_line.addLayout(v1)
 
+
+def show_notes():
+    key = notes_list.currentItem().text()
+    notes_text.setText(notes[key]["текст"])
+    notes_list2.clear()
+    notes_list2.addItems(notes[key]["теги"])
+
+notes_list.itemClicked.connect(show_notes)
 
 window.setLayout(main_line)
 window.show()
