@@ -84,6 +84,53 @@ def show_notes():
     notes_list2.clear()
     notes_list2.addItems(notes[key]["теги"])
 
+
+def add_note():
+    note_name, ok = QInputDialog.getText(window, "Нова нотатка", "Введіть назву нотатки")
+    if ok == True:
+        notes[note_name] = {
+            "текст": "",
+            "теги": [
+
+            ]
+        }
+        notes_list.clear()
+        notes_list.addItems(notes)
+        write_in_file(notes)
+
+def save_note_funk():
+    text = notes_text.toPlainText()
+    note_key = notes_list.currentItem().text()
+    notes[note_key]["текст"] = text
+    write_in_file(notes)
+
+
+
+def add_teg():
+    teg_name, ok = QInputDialog.getText(window, "Новий тег", "Введіть назву тегу")
+    if ok == True:
+        notes[teg_name] = {
+            "текст": "",
+            "теги": [
+
+            ]
+        }
+        
+
+
+def delete_note():
+
+    note_key = notes_list.currentItem().text()
+    notes.pop(note_key)
+    notes_list.clear()
+    notes_list.addItems(notes)
+    write_in_file(notes)
+
+
+
+knopka2.clicked.connect(delete_note)
+knopka3.clicked.connect(save_note_funk)
+knopka4.clicked.connect(add_note)
 notes_list.itemClicked.connect(show_notes)
 
 window.setLayout(main_line)
