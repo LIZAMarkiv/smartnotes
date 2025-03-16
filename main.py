@@ -109,15 +109,24 @@ def save_note_funk():
 def add_teg():
     teg_name, ok = QInputDialog.getText(window, "Новий тег", "Введіть назву тегу")
     if ok == True:
-        notes[teg_name] = {
-            "текст": "",
-            "теги": [
+        cey = notes_list.currentItem().text()
+        notes[cey]["теги"].append(teg_name)
 
-            ]
-        }
-        
+        notes_list.clear()
+        notes_list.addItems(notes)
+        write_in_file(notes)
 
 
+
+
+
+def delete_teg():
+    ke = notes_list2.currentItem().text()
+    key = notes_list.currentItem().text()
+    notes[key]["теги"].remove(ke)
+    notes_list2.clear()
+    notes_list2.addItems(notes[key]["теги"])
+    write_in_file(notes)
 def delete_note():
 
     note_key = notes_list.currentItem().text()
@@ -126,11 +135,11 @@ def delete_note():
     notes_list.addItems(notes)
     write_in_file(notes)
 
-
-
+knopka5.clicked.connect(delete_teg)
+knopka4.clicked.connect(add_teg)
 knopka2.clicked.connect(delete_note)
 knopka3.clicked.connect(save_note_funk)
-knopka4.clicked.connect(add_note)
+knopka1.clicked.connect(add_note)
 notes_list.itemClicked.connect(show_notes)
 
 window.setLayout(main_line)
